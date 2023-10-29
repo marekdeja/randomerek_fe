@@ -4,7 +4,10 @@
       "paths": {
          //aliases
          "@/*": ["*"],
-         "@components/*": ["components/*"]
+         "components/*": ["components/*"],
+         "pages/*": ["pages/*"],
+         "store/*": ["store/*"],
+         "hooks/*": ["hooks/*"]
       },
 
       "target": "ES2020",

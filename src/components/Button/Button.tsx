@@ -1,4 +1,4 @@
-import buttonStyles from 'Button.module.scss'
+import buttonStyles from './Button.module.scss'
 
 const Button = () => {
    return (
