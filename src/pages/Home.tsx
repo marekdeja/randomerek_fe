@@ -1,30 +1,63 @@
-import i18n from '@/common/language/i18n'
-import useGetPosts from '@/hooks/useGetAllPosts'
-import useLanguage from '@/hooks/useLanguage'
-import useTheme from 'hooks/useTheme'
-import { Language, Theme } from 'store/slices/appSlice'
+import { randomResultApi } from '@/api/service'
+import useGetAllResults from '@/hooks/useGetAllResults'
+import { useState } from 'react'
 
 const Home = () => {
-   const { theme, setCurrentTheme } = useTheme()
-   const { language, setCurrentLanguage } = useLanguage()
-   const { getPosts, posts } = useGetPosts()
+   const [numberResults, setNumberResults] = useState<number | undefined>(undefined)
+   const [userName, setUserName] = useState<string>('')
+   const { getResults, allResults } = useGetAllResults()
 
-   const toggleTheme = () => {
-      setCurrentTheme(theme === Theme.Dark ? Theme.Light : Theme.Dark)
+   const drawNumber = () => {
+      setNumberResults(Math.floor(Math.random() * 101))
    }
 
-   const toggleLanguage = () => {
-      setCurrentLanguage(language === Language.EN ? Language.PL : Language.EN)
+   const changeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUserName(e.target.value)
    }
-   console.log(posts)
+
+   const clickResults = () => {
+      console.log('clicked results')
+      getResults()
+   }
+
+   const postResult = () => {
+      console.log('numberResults', numberResults)
+      numberResults &&
+         randomResultApi.postResult({ randomNumber: numberResults, userName: userName })
+   }
+
    return (
       <div>
-         <div> Current theme is {theme}</div>
-         <button onClick={toggleTheme}>Switch Theme</button>
+         <div> Randomerek</div>
+         <div>Click to draw a number 0 - 100</div>
+         <button onClick={drawNumber}>DRAW</button>
 
-         <div>{i18n.t('greeting')}</div>
-         <button onClick={toggleLanguage}>Toggle language</button>
-         <button onClick={getPosts}>Get posts</button>
+         <div>
+            <input value={userName} onChange={changeUsername} placeholder="Your name here" />
+         </div>
+         <div>Your name is: {userName}</div>
+         <div>Results: {numberResults ?? '-'}</div>
+
+         <div>
+            <button onClick={postResult}>Post result</button>
+         </div>
+         <div>
+            <b>Last ten results:</b>
+         </div>
+         <div>
+            <button onClick={clickResults}>Get results</button>
+         </div>
+         {allResults && (
+            //write rest of the code here
+            <ul>
+               {' '}
+               {allResults.slice(0, 10).map((result) => (
+                  <li key={result._id}>
+                     {result.userName} - {result.randomNumber}{' '}
+                  </li>
+               ))}{' '}
+            </ul>
+         )}
       </div>
    )
 }

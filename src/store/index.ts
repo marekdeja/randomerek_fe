@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import appReducer from './slices/appSlice'
 import postReducer from './slices/postSlice'
+import randomResultReducer from './slices/randomResultSlice'
 
 const store = configureStore({
    reducer: {
       app: appReducer,
       posts: postReducer,
+      randomResults: randomResultReducer,
    },
 })
 
