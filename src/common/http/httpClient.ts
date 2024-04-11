@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, {
-   AxiosInstance,
-   AxiosPromise,
-   AxiosResponse,
-   InternalAxiosRequestConfig,
-   Method,
-} from 'axios'
+
+import axios, { AxiosInstance, AxiosPromise, AxiosResponse, Method } from 'axios'
 
 export interface Request {
    headers?: Record<string, string>
@@ -15,15 +10,6 @@ export interface Request {
 
 export class HttpClient {
    private httpClient: AxiosInstance
-   private handleRequestUse(config: InternalAxiosRequestConfig) {
-      // handle request interceptor logic here
-      return config
-   }
-
-   private handleResponseUse(config: AxiosResponse) {
-      // handle response interceptor logic here
-      return config
-   }
 
    private async handleRequest(
       url: string,
@@ -63,14 +49,11 @@ export class HttpClient {
 
    constructor() {
       this.httpClient = axios.create({
-         // baseURL: 'https://jsonplaceholder.typicode.com',
-         baseURL: 'http://localhost:3000',
+         // baseURL: 'http://localhost:3000',
+         // baseURL: import.meta.env.BACKEND_URL,
+         baseURL: import.meta.env.VITE_BACKEND_URL,
          timeout: 60000,
       })
-
-      //Functions for interceptors to do sth before request and response
-      //   this.httpClient.interceptors.request.use(this.handleRequestUse)
-      //   this.httpClient.interceptors.response.use(this.handleResponseUse)
    }
 }
 
