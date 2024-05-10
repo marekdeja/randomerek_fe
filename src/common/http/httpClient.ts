@@ -49,8 +49,6 @@ export class HttpClient {
 
    constructor() {
       this.httpClient = axios.create({
-         // baseURL: 'http://localhost:3000',
-         // baseURL: import.meta.env.BACKEND_URL,
          baseURL: import.meta.env.VITE_BACKEND_URL,
          timeout: 60000,
       })
